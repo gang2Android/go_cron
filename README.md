@@ -35,6 +35,32 @@ config.yaml说明
 |logs-compress |bool |日志-是否压缩 |
 |logs-debug |bool |日志-是否debug |
 
+cron_task.sql字段说明
+
+|参数名|类型|说明|
+|:---- |:----- |----- |
+|id |int |自增id |
+|name |string |任务名称 |
+|type |int |任务类型,1访问url,2备份mysql |
+|spec |string |执行间隔,cron表达式 |
+|enable |int |是否启用,1启用2停用 |
+|content |string |任务内容1http网址,2mysql对象 |
+|task_no |string |cron任务id,用于管理任务 |
+|add_time |timestamp |添加时间 |
+
+cron_task.sql - content内容当type=2时
+
+|参数名|类型|说明|
+|:---- |:----- |----- |
+|name |string |数据库名称 |
+|host |string |数据库地址 |
+|db |string |数据库名称 |
+|user |string |数据库用户名称 |
+|pwd |string |数据库密码 |
+|backPath |string |备份文件的保存位置,绝对路径 |
+|mysqlPath |string |本地mysql安装位置,绝对路径 |
+|retain |int |备份文件保存天数 |
+
 部署
 
 ```shell
