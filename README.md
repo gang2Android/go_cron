@@ -1,55 +1,39 @@
 # cron_go
 
-通过go的cron+json配置文件的方式实现可配置的计划任务
+从mysql读取计划任务配置启动计划任务 通过api控制任务
 
-根目录的task.json为计划任务的配置文件
+api
 
-```json
-[
-  {
-    "name": "计划任务名称",
-    "spec": "任务执行间隔,如每分钟执行一次:0 0/1 * * *",
-    "url": "访问的http地址"
-  }
-]
-```
+- 获取信息 `http://127.0.0.1:9999/api/info`
+- 启动所有任务 `http://127.0.0.1:9999/api/start`
+- 停止所有任务 `http://127.0.0.1:9999/api/stop`
+- 添加任务 `http://127.0.0.1:9999/api/add?id=数据库计划任务表id`
+- 停止任务 `http://127.0.0.1:9999/api/remove?id=数据库计划任务表id`
 
-根目录的task_db.json为备份数据库计划任务的配置文件-mysql5.6
+config.yaml说明
 
-```json
-[
-  {
-    "name": "计划任务名称",
-    "host": "数据库地址",
-    "db": "数据库名称",
-    "user": "用户名",
-    "pwd": "密码",
-    "backPath": "备份到哪个文件夹下",
-    "mysqlPath": "mysql安装目录(如/www/server/mysql/bin/)",
-    "retain": "数据库保留天数",
-    "spec": "任务执行间隔,如每小时执行一次:0 0 0/1 * *"
-  }
-]
-```
-
-根目录的task_disk.json为检查系统磁盘计划任务的配置文件-当低于min就会发生短信到sms_mobile手机上
-
-```json
-[
-  {
-    "name": "数据盘",
-    "spec": "0 0 0/1 * * ?",
-    "path": "/mnt",
-    "min": 5,
-    "sms_ak": "阿里云AccessKeyID",
-    "sms_as": "阿里云AccessKeySecret",
-    "sms_end": "dysmsapi.aliyuncs.com",
-    "sms_name": "短信签名",
-    "sms_code": "验证码短信模板id",
-    "sms_mobile": "接收预警的手机号"
-  }
-]
-```
+|参数名|类型|说明|
+|:---- |:----- |----- |
+|name |string |服务名 |
+|port |int |服务启动端口 |
+|mysql |object |mysql数据库配置 |
+|mysql-host |string |数据库-地址 |
+|mysql-port |int |数据库-端口 |
+|mysql-db |string |数据库-名称 |
+|mysql-name |string |数据库-用户名 |
+|mysql-pwd |string |数据库-密码 |
+|redis |object |redis配置 |
+|redis-host |string |redis-地址 |
+|redis-port |int |redis-端口 |
+|redis-db |string |redis-数据库id |
+|redis-pwd |string |redis-密码 |
+|logs |object |日志 |
+|logs-file_path |string |日志-存储路径如：./logs/cron_app.log |
+|logs-max_size |int |日志-单个文件大小上限,单位M |
+|logs-max_backups |int |日志-保留份数 |
+|logs-max_age |int |日志-保存天数 |
+|logs-compress |bool |日志-是否压缩 |
+|logs-debug |bool |日志-是否debug |
 
 部署
 
@@ -58,7 +42,8 @@ set GOOS=linux
 set GOARCH=amd64
 go build -o cron_app
 # 上传到服务器目录下
+# 导入数据库表
+mkdir "logs"
 chmod 777 cron_app
 nohup ./cron_app &
 ```
-

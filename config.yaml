@@ -1,0 +1,20 @@
+name: cron_app
+port: 9999
+mysql:
+  host: 127.0.0.1
+  port: 3306
+  db: db_name
+  name: user_name
+  pwd: user_pwd
+redis:
+  host: 127.0.0.1
+  port: 6379
+  pwd:
+  db: 1
+logs:
+  file_path: ./logs/cron_app.log
+  max_size: 10
+  max_backups: 30
+  max_age: 2
+  compress: true
+  debug: true

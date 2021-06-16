@@ -1,10 +1,11 @@
 package utils
 
 import (
-	"fmt"
+	"cronProject/global"
 	"io/ioutil"
 	"net/http"
 	"os/exec"
+	"strconv"
 	"syscall"
 )
 
@@ -23,17 +24,16 @@ func Cmd(cmdStr string) {
 	stdout, _ := cmd.StdoutPipe()
 	defer stdout.Close()
 	if err := cmd.Start(); err != nil {
-		fmt.Printf("cmd.Start: %v")
+		global.Logger.Info("Cmd-start")
 	}
 	result, _ := ioutil.ReadAll(stdout)
 	resdata := string(result)
-	fmt.Println("result=", resdata)
+	global.Logger.Info("Cmd" + resdata)
 	var res int
 	if err := cmd.Wait(); err != nil {
 		if ex, ok := err.(*exec.ExitError); ok {
-			fmt.Println("cmd exit status")
 			res = ex.Sys().(syscall.WaitStatus).ExitStatus() //获取命令执行返回状态，相当于shell: echo $?
 		}
 	}
-	fmt.Println(res)
+	global.Logger.Info("Cmd-res" + strconv.Itoa(res))
 }
