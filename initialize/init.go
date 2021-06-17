@@ -20,7 +20,7 @@ func InitBase() {
 func GetRouter() *gin.Engine {
 	gin.SetMode(gin.ReleaseMode)
 	r := gin.Default()
-	group := r.Group("api")
+	group := r.Group("task")
 	{
 		routers.Cron(group)
 	}
