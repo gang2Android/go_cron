@@ -23,7 +23,7 @@ func (t Task) Cmd() {
 	go func(task Task) {
 		global.Logger.Info(task.Name + "start")
 		switch task.Type {
-		case 1:
+		case 1: /*访问url*/
 			{
 				if strings.Contains(task.Content, "://") {
 					res := utils.Get(task.Content)
@@ -34,10 +34,16 @@ func (t Task) Cmd() {
 					global.Logger.Info(task.Name + "=" + res)
 				}
 			}
-		case 2:
-			var db DB
-			_ = json.Unmarshal([]byte(task.Content), &db)
-			utils.Cmd(db.GetCmdStr())
+		case 2: /*数据库备份*/
+			{
+				var db DB
+				_ = json.Unmarshal([]byte(task.Content), &db)
+				utils.Cmd(db.GetCmdStr())
+			}
+		case 3: /*执行shell命令*/
+			{
+				utils.Cmd(task.Content)
+			}
 		default:
 			global.Logger.Info(task.Name + "default")
 		}
