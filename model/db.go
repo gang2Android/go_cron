@@ -3,7 +3,6 @@ package model
 import "strings"
 
 type DB struct {
-	Name      string `json:"name"`
 	Host      string `json:"host"`
 	Db        string `json:"db"`
 	User      string `json:"user"`
@@ -14,7 +13,7 @@ type DB struct {
 }
 
 func (db DB) String() string {
-	return "{\"Name\":" + db.Name + ",\"Host\":" + db.Host + ",\"Db\":" + db.Db +
+	return "{\"Host\":" + db.Host + ",\"Db\":" + db.Db +
 		",\"User\":" + db.User + ",\"Pwd\":" + db.Pwd +
 		",\"BackPath\":" + db.BackPath + ",\"MysqlPath\":" + db.MysqlPath + ",\"Retain\":" + db.Retain + "}"
 }

@@ -52,7 +52,6 @@ cron_task.sql - content内容当type=2时
 
 |参数名|类型|说明|
 |:---- |:----- |----- |
-|name |string |数据库名称 |
 |host |string |数据库地址 |
 |db |string |数据库名称 |
 |user |string |数据库用户名称 |
