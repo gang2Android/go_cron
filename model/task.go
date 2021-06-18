@@ -42,7 +42,24 @@ func (t Task) Cmd() {
 			}
 		case 3: /*执行shell命令*/
 			{
-				utils.Cmd(task.Content)
+				global.Logger.Info(task.Content)
+				task.Content = strings.ReplaceAll(task.Content, "\r", "")
+				cmdStr := strings.Builder{}
+				if strings.Contains(task.Content, "\n") {
+					split := strings.Split(task.Content, "\n")
+					for _, v := range split {
+						if len(v) == 0 {
+							continue
+						}
+						if len(cmdStr.String()) != 0 {
+							cmdStr.WriteString(" && ")
+						}
+						cmdStr.WriteString(v)
+					}
+				} else {
+					cmdStr.WriteString(task.Content)
+				}
+				utils.Cmd(cmdStr.String())
 			}
 		default:
 			global.Logger.Info(task.Name + "default")

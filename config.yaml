@@ -1,11 +1,11 @@
 name: cron_app
 port: 9999
 mysql:
-  host: 127.0.0.1
+  host: 47.106.201.36
   port: 3306
-  db: db_name
-  name: user_name
-  pwd: user_pwd
+  db: shop_mall
+  name: shop_mall
+  pwd: JzNHWuKsdxcHW0Ha
 redis:
   host: 127.0.0.1
   port: 6379
