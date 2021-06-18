@@ -42,7 +42,6 @@ func (t Task) Cmd() {
 			}
 		case 3: /*执行shell命令*/
 			{
-				global.Logger.Info(task.Content)
 				task.Content = strings.ReplaceAll(task.Content, "\r", "")
 				cmdStr := strings.Builder{}
 				if strings.Contains(task.Content, "\n") {
@@ -54,11 +53,13 @@ func (t Task) Cmd() {
 						if len(cmdStr.String()) != 0 {
 							cmdStr.WriteString(" && ")
 						}
+						// 每行命令结尾不能为分号(;)
 						cmdStr.WriteString(v)
 					}
 				} else {
 					cmdStr.WriteString(task.Content)
 				}
+				global.Logger.Info(cmdStr.String())
 				utils.Cmd(cmdStr.String())
 			}
 		default:
