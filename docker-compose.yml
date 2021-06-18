@@ -1,0 +1,7 @@
+# yaml 配置
+version: "3.7"
+services:
+  bubble_app:
+    build: .
+    ports:
+      - "9999:9999"
