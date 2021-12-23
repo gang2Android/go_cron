@@ -9,6 +9,7 @@ api
 - 停止所有任务 `http://127.0.0.1:9999/task/stop`
 - 添加任务 `http://127.0.0.1:9999/task/add?id=数据库计划任务表id`
 - 停止任务 `http://127.0.0.1:9999/task/remove?id=数据库计划任务表id`
+- 执行任务 `http://127.0.0.1:9999/task/run?id=数据库计划任务表id`
 
 config.yaml说明
 
